@@ -1,0 +1,36 @@
+{
+    "name": "avxman/media-library-ext",
+    "description": "The module extends the medialibrary for laraval >= 8.0",
+    "homepage": "https://github.com/avxman/media-library-ext",
+    "notification-url": "https://packagist.org/downloads/",
+    "version": "0.9.0",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alexandr Kheyder",
+            "email": "wk.kheyder.a.v@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "8.*",
+        "laravel/framework": "^8.0",
+        "spatie/laravel-medialibrary": "^7.0.0"
+    },
+    "autoload": {
+        "classmap": [],
+        "psr-4": {
+            "Avxman\\MediaLibraryExt\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Avxman\\MediaLibraryExt\\Providers\\MediaLibraryExtServiceProvider"
+            ],
+            "aliases": {
+                "MedialibraryExt": "Avxman\\MediaLibraryExt\\Facades\\MediaLibraryExtFacade"
+            }
+        }
+    }
+}
