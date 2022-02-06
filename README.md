@@ -70,6 +70,17 @@ $view_images = MediaLibraryExtFacade::toPicture();
 $view_images = MediaLibraryExtFacade::toResponsive();
 
 
+// Также весь вышеуказанный код можно перечислить в один вызов
+// главное, соблюдать очередность вызовов
+$view_images = MediaLibraryExtFacade::reset()
+                    ->init(\App\Models\User::find(1))
+                    ->setAltName('Новое имя alt в изображении')
+                    ->setDefaultImg('/uploads/default/no-image.jpg')
+                    ->setWidth('50%')
+                    ->toPicture();
+
+
+
 ```
 Вызов во views
 ```injectablephp
