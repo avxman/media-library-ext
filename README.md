@@ -22,10 +22,11 @@ php artisan vendor:publish --tag="avxman-media-library-ext-views"
 ```
 
 ## Методы
-### Дополнительные (очерёдность вызова метода - первичная)
+### Сброс настроек (очерёдность вызова метода - первичная)
 - **`reset()`** - Сброс параметров для нового изображения
+### Инициализация (очерёдность вызова метода - вторичная)
 - **`init(\Illuminate\Database\Eloquent\Model $model)`** - Получаем список изображений Model
-### Вывод (очерёдность вызова метода - вторичная)
+### Дополнительные (очерёдность вызова метода - вторичная)
 - **`setAltName(string $altName)`** - Перезаписываем атрибут alt для тега img
 - **`setCollection(string $name)`** - Перезаписываем имя коллекции в media
 - **`setDefaultImg(string $imgUrl)`** - Перезаписываем ссылку дефолтного изображения
@@ -45,16 +46,13 @@ php artisan vendor:publish --tag="avxman-media-library-ext-views"
 
 use Avxman\MediaLibraryExt\Facades\MediaLibraryExtFacade;
 
-// Инициализируем изображения
-MediaLibraryExtFacade::init(\App\Models\User::find(1));
-//или
+// Сброс настроек изображения перед инициализацией
 MediaLibraryExtFacade::reset();
-MediaLibraryExtFacade::init(\App\Models\User::find(1));
-//или
-MediaLibraryExtFacade::reset()->init(\App\Models\User::find(1));
 
-// После инициализации изображения можно перезаписать параметры (очерёдность - вторичная)
-// которые указаны по умолчанию из конфигурационного файла
+// Инициализация изображений
+MediaLibraryExtFacade::init(\App\Models\User::find(1));
+
+// Перезаписать параметров (очерёдность - вторичная)
 MediaLibraryExtFacade::setAltName('Новое имя alt в изображении');
 MediaLibraryExtFacade::setDefaultImg('/uploads/default/no-image.jpg');
 MediaLibraryExtFacade::setWidth('50%');
@@ -77,6 +75,19 @@ $view_images = MediaLibraryExtFacade::reset()
                     ->setAltName('Новое имя alt в изображении')
                     ->setDefaultImg('/uploads/default/no-image.jpg')
                     ->setWidth('50%')
+                    ->toPicture();
+
+// Можно и так
+$view_images = MediaLibraryExtFacade
+                    // сброс настроек
+                    ::reset()
+                    // перезаписываем параметры
+                    ->setAltName('Новое имя alt в изображении')
+                    ->setDefaultImg('/uploads/default/no-image.jpg')
+                    ->setWidth('50%')
+                    // инициализируем изображения
+                    ->init(\App\Models\User::find(1))
+                    // получаем html код в виде тега <picture></picture>
                     ->toPicture();
 
 
