@@ -71,7 +71,7 @@ $view_images = MediaLibraryExtFacade::toResponsive();
 
 
 // Также весь вышеуказанный код можно перечислить в один вызов
-// главное, соблюдать очередность вызовов
+// главное, соблюдать очередность методов
 $view_images = MediaLibraryExtFacade::reset()
                     ->init(\App\Models\User::find(1))
                     ->setAltName('Новое имя alt в изображении')
